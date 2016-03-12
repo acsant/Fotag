@@ -5,7 +5,7 @@ NAME = "Fotag"
 
 all:
 	@echo "Compiling..."
-	javac *.java
+	javac *.java Views/*.java Resources/*.java Model/*.java
 
 run: all
 	@echo "Running..."
@@ -13,3 +13,6 @@ run: all
 
 clean:
 	rm -rf *.class
+	rm -rf Model/*.class
+	rm -rf Views/*.class
+	rm -rf Resources/*.class

@@ -1,31 +1,48 @@
+
+
 import javax.swing.*;
+import java.awt.*;
+import Views.*;
+import Resources.*;
+import Model.*;
 
 public class Fotag {
 
 	public Fotag() {
 		// Set crossplatform look and feel
-		try {
+		/*try {
     		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     	} catch (Exception ex) {
     		System.err.println("Cross platform look an feel not found.");
-    	}
+    	}*/
 
     	// Create the main frame
-    	JFrame fotag = new JFrame();
+    	JFrame fotag = new JFrame(GlobalConstants.APPLICATION_NAME);
+        // Grouping panel
+        JPanel groupPanel = new JPanel();
     	// Create appropriate layout
     	fotag.setLayout(new BorderLayout());
+        fotag.setSize(GlobalConstants.SCREEN_SIZE);
+        groupPanel.setLayout(new BorderLayout());
 
     	// Create a model for the application
-    	Model model = new Model();
+		Model model = new Model();
 
     	// Create childs views for the main application window
     	MenuView menu = new MenuView(model);
+        RankView rankView = new RankView(model);
+        ImageView imageView = new ImageView(model);
 
     	// Add corresponding views to model
     	model.addObserver(menu);
 
     	// Add subviews to the application window
+        groupPanel.add(rankView, BorderLayout.NORTH);
+        groupPanel.add(imageView, BorderLayout.CENTER);
     	fotag.add(menu, BorderLayout.NORTH);
+        fotag.add(groupPanel, BorderLayout.CENTER);
+        fotag.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fotag.setVisible(true);
 	}
 
     public static void main(String[] args) {

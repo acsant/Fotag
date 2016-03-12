@@ -4,6 +4,7 @@ import Resources.*;
 import java.nio.file.attribute.*;
 import java.text.*;
 import java.lang.*;
+import java.nio.file.*;
 
 public class ImageModel {
 	// Image attributes including metadata
@@ -11,13 +12,16 @@ public class ImageModel {
 	private String creationDateTime;
 	private String lastAccessDateTime;
 	private String imgSize;
+	private String fileName;
 	
 	public ImageModel (String filePath, FileTime creationTime, FileTime lastAccess, long size) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
+		Path path = Paths.get(filePath);
 		imgPath = filePath;
 		creationDateTime = dateFormat.format(creationTime.toMillis());
 		lastAccessDateTime = dateFormat.format(lastAccess.toMillis());
 		imgSize = formatImageSize(size);
+		fileName = path.getFileName().toString();
 	}
 
 	public String getImagePath () {
@@ -61,5 +65,12 @@ public class ImageModel {
 				"\n" + "Image Size: " + imgSize +
 				"\n" + "Creation Date: " + creationDateTime + 
 				"\n" + "Last Accessed: " + lastAccessDateTime;
+	}
+
+	public String htmlString () {
+		return "<html>Path: " + fileName +  
+				"<br>" + "Image Size: " + imgSize +
+				"<br>" + "Creation Date: " + creationDateTime + 
+				"<br>" + "Last Accessed: " + lastAccessDateTime + "</html>";
 	}
 }

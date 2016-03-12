@@ -31,14 +31,15 @@ public class Fotag {
     	// Create childs views for the main application window
     	MenuView menu = new MenuView(model);
         RankView rankView = new RankView(model);
-        ImageView imageView = new ImageView(model);
+        ImageCollectionView imgCollectionView = new ImageCollectionView(model);
 
     	// Add corresponding views to model
     	model.addObserver(menu);
+        model.addObserver(imgCollectionView);
 
     	// Add subviews to the application window
         groupPanel.add(rankView, BorderLayout.NORTH);
-        groupPanel.add(imageView, BorderLayout.CENTER);
+        groupPanel.add(imgCollectionView, BorderLayout.CENTER);
     	fotag.add(menu, BorderLayout.NORTH);
         fotag.add(groupPanel, BorderLayout.CENTER);
         fotag.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

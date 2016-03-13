@@ -27,12 +27,12 @@ public class ImageCollectionView extends JPanel implements Observer {
 		this.removeAll();
 		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
 			System.out.println("Adding image: \n" + entry.getKey().toString() + "\n");
+
 			this.add(new ImageView(entry.getValue(), entry.getKey().htmlString()));
 		}
 		repaint();
 		Dimension preferredDim = model.getCollectionSize();
 		this.setPreferredSize(preferredDim);
-		this.setSize(preferredDim);
 		revalidate();
 	}
 }

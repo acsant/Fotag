@@ -5,6 +5,7 @@ import Resources.GlobalConstants;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,25 +32,25 @@ public class Model extends Observable {
 
 	public void addFilePaths (ArrayList<String> filePaths) {
 		numImages += filePaths.size();
-		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH*2)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
+		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
 		for (String fp : filePaths) {
+			ImageIcon icon;
 			Path filePath = Paths.get(fp);
 			File imgFile = new File(fp);
-			Image image;
+			BufferedImage image;
 			BasicFileAttributes fileAttr;
 			ImageModel imModel;
-			Image scaledImg;
-			ImageIcon thumbnail;
 
 			try {
 				image = ImageIO.read(imgFile);
+				double height = image.getHeight();
+				double width = image.getWidth();
+				double ratio = width/height;
+				icon = new ImageIcon(image.getScaledInstance(((Double)(GlobalConstants.THUMBNAIL_WIDTH*ratio)).intValue(),
+						GlobalConstants.THUMBNAIL_HEIGHT, Image.SCALE_FAST));
 				fileAttr = Files.readAttributes(filePath, BasicFileAttributes.class);
-				scaledImg = image.getScaledInstance(GlobalConstants.THUMBNAIL_WIDTH,
-					GlobalConstants.THUMBNAIL_HEIGHT, Image.SCALE_SMOOTH);
-				thumbnail = new ImageIcon(scaledImg);
 				imModel = new ImageModel(fp, fileAttr.creationTime(), fileAttr.lastAccessTime(), fileAttr.size());
-				System.out.println("Image loaded: \n" + imModel.toString());
-				selectedImages.put(imModel, thumbnail);
+				selectedImages.put(imModel, icon);
 			} catch (IOException ex) {
 				System.err.println("File not found: " + fp);
 			}
@@ -89,7 +90,7 @@ public class Model extends Observable {
 
 	public void setCurrentSize(Dimension _currentSize) {
 		this.currentSize = _currentSize;
-		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH*2)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
+		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
 		collectionSize = new Dimension(currentSize.width, ((Double)(numRows * (GlobalConstants.THUMBNAIL_HEIGHT + 100))).intValue());
 		setChanged();
 		notifyObservers();

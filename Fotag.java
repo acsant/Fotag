@@ -4,7 +4,7 @@ import Model.Model;
 import Resources.GlobalConstants;
 import Views.ImageCollectionView;
 import Views.MenuView;
-import Views.RankView;
+import Views.FilterView;
 import Views.ScrollView;
 
 import javax.swing.*;
@@ -35,7 +35,7 @@ public class Fotag {
 
     	// Create childs views for the main application window
     	MenuView menu = new MenuView(model);
-        RankView rankView = new RankView(model);
+        FilterView filterView = new FilterView(model);
         ImageCollectionView imgCollectionView = new ImageCollectionView(model);
         ScrollView scrollable = new ScrollView(model);
 
@@ -44,12 +44,12 @@ public class Fotag {
 
     	// Add corresponding views to model
     	model.addObserver(menu);
-        model.addObserver(rankView);
+        model.addObserver(filterView);
         model.addObserver(imgCollectionView);
         model.addObserver(scrollable);
 
     	// Add subviews to the application window
-        groupPanel.add(rankView, BorderLayout.NORTH);
+        groupPanel.add(filterView, BorderLayout.NORTH);
         groupPanel.add(scrollable, BorderLayout.CENTER);
     	fotag.add(menu, BorderLayout.NORTH);
         fotag.add(groupPanel, BorderLayout.CENTER);

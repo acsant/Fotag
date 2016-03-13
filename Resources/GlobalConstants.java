@@ -20,5 +20,5 @@ public class GlobalConstants {
     public static final String DATE_FORMAT = "MM-dd-yyyy";
     public static final String SIZE_FORMAT = "0.00";
     public static final int THUMBNAIL_HEIGHT = 200;
-    public static final int THUMBNAIL_WIDTH = 100;
+    public static final int THUMBNAIL_WIDTH = 200;
 }

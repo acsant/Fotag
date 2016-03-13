@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RankView extends JPanel implements Observer {
+public class FilterView extends JPanel implements Observer {
 	// Set the model
 	Model model;
 	JLabel applicationName;
@@ -23,7 +23,7 @@ public class RankView extends JPanel implements Observer {
 	Border border;
 	RankingController controller;
 
-	public RankView (Model _model) {
+	public FilterView(Model _model) {
 		model = _model;
 		controller = new RankingController();
 		applicationName = new JLabel(GlobalConstants.APPLICATION_NAME);
@@ -42,9 +42,8 @@ public class RankView extends JPanel implements Observer {
 		star5.addMouseListener(controller);
 
 		applicationName.setFont(new Font("Courier New", Font.BOLD, GlobalConstants.TITLE_FONT_SIZE));
-		border = new CompoundBorder(new EmptyBorder(GlobalConstants.BORDER_PADDING, 
-			GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING),
-			new EtchedBorder(EtchedBorder.LOWERED));
+		border = new EmptyBorder(GlobalConstants.BORDER_PADDING,
+			GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING);
 
 		// Design the stars
 		rankPanel.setLayout(new GridLayout(0,5));
@@ -59,7 +58,8 @@ public class RankView extends JPanel implements Observer {
 		rankPanel.add(star3);
 		rankPanel.add(star4);
 		rankPanel.add(star5);
-	
+		rankPanel.setBackground(Color.WHITE);
+		super.setBackground(Color.WHITE);
 		super.setBorder(border);
 		super.setLayout(new BorderLayout());
 		super.add(applicationName, BorderLayout.WEST);
@@ -81,6 +81,7 @@ public class RankView extends JPanel implements Observer {
 	}
 
 	private void createStar(JButton button) {
+		button.setBackground(Color.WHITE);
 		button.setOpaque(false); 
 		button.setFont(new Font("Plain", Font.BOLD, GlobalConstants.STAR_SIZE));
 		button.setContentAreaFilled(false);

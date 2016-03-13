@@ -1,38 +1,38 @@
 package Views;
 
-import Model.*;
-import Resources.*;
+import Model.ImageModel;
+import Model.Model;
+import Resources.GlobalConstants;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
-import javax.swing.border.*;
-import java.util.Observer;
+import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 
 public class ImageCollectionView extends JPanel implements Observer {
 	// Set the model for the view
 	Model model;
-	Border border;
 
 	public ImageCollectionView (Model _model) {
 		model = _model;
-		border = new CompoundBorder(new EmptyBorder(GlobalConstants.BORDER_PADDING, 
-			GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING, GlobalConstants.BORDER_PADDING),
-			new EtchedBorder(EtchedBorder.LOWERED));
 
+		super.setPreferredSize(GlobalConstants.MINIMUM_SIZE);
 		super.setLayout(new FlowLayout());
-		super.setBorder(border);
 	}
 
 	@Override
 	public void update (Observable o, Object arg) {
 		HashMap<ImageModel, ImageIcon> selectedImages = model.getSelectedImages();
-		System.out.println("Updating collection.");
+		this.removeAll();
 		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
 			System.out.println("Adding image: \n" + entry.getKey().toString() + "\n");
 			this.add(new ImageView(entry.getValue(), entry.getKey().htmlString()));
 		}
 		repaint();
+		Dimension preferredDim = model.getCollectionSize();
+		this.setPreferredSize(preferredDim);
+		this.setSize(preferredDim);
+		revalidate();
 	}
 }

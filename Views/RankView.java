@@ -69,7 +69,15 @@ public class RankView extends JPanel implements Observer {
 
 	@Override
 	public void update (Observable o, Object arg) {
-
+		if (model.isShowName()) {
+			applicationName.setVisible(true);
+			this.remove(rankPanel);
+			this.add(rankPanel, BorderLayout.EAST);
+		} else {
+			applicationName.setVisible(false);
+			this.remove(rankPanel);
+			this.add(rankPanel, BorderLayout.CENTER);
+		}
 	}
 
 	private void createStar(JButton button) {

@@ -5,9 +5,7 @@ import Resources.GlobalConstants;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -94,8 +92,76 @@ public class FilterView extends JPanel implements Observer {
 		}
 
 		@Override
+		public void mouseClicked (MouseEvent e) {
+			JButton source = (JButton) e.getSource();
+
+			if (star1.equals(source)) {
+				if (model.getFilter() < 1) {
+					star1.setText(GlobalConstants.FILLED_STAR);
+				} else {
+					star2.setText(GlobalConstants.STAR);
+					star3.setText(GlobalConstants.STAR);
+					star4.setText(GlobalConstants.STAR);
+					star5.setText(GlobalConstants.STAR);
+				}
+				model.setFilter(1);
+			} else if (star2.equals(source)) {
+				if (model.getFilter() < 2) {
+					star1.setText(GlobalConstants.FILLED_STAR);
+					star2.setText(GlobalConstants.FILLED_STAR);
+				} else {
+					star3.setText(GlobalConstants.STAR);
+					star4.setText(GlobalConstants.STAR);
+					star5.setText(GlobalConstants.STAR);
+				}
+
+				model.setFilter(2);
+			} else if (star3.equals(source)) {
+				if (model.getFilter() < 3) {
+					star1.setText(GlobalConstants.FILLED_STAR);
+					star2.setText(GlobalConstants.FILLED_STAR);
+					star3.setText(GlobalConstants.FILLED_STAR);
+				} else {
+					star4.setText(GlobalConstants.STAR);
+					star5.setText(GlobalConstants.STAR);
+				}
+
+				model.setFilter(3);
+			} else if (star4.equals(source)) {
+				if (model.getFilter() < 4) {
+					star1.setText(GlobalConstants.FILLED_STAR);
+					star2.setText(GlobalConstants.FILLED_STAR);
+					star3.setText(GlobalConstants.FILLED_STAR);
+					star4.setText(GlobalConstants.FILLED_STAR);
+				} else {
+					star5.setText(GlobalConstants.STAR);
+				}
+				model.setFilter(4);
+			} else if (star5.equals(source)) {
+				if (model.getFilter() < 5) {
+					star1.setText(GlobalConstants.FILLED_STAR);
+					star2.setText(GlobalConstants.FILLED_STAR);
+					star3.setText(GlobalConstants.FILLED_STAR);
+					star4.setText(GlobalConstants.FILLED_STAR);
+					star5.setText(GlobalConstants.FILLED_STAR);
+
+					model.setFilter(5);
+				} else {
+					star1.setText(GlobalConstants.STAR);
+					star2.setText(GlobalConstants.STAR);
+					star3.setText(GlobalConstants.STAR);
+					star4.setText(GlobalConstants.STAR);
+					star5.setText(GlobalConstants.STAR);
+
+					model.setFilter(0);
+				}
+			}
+		}
+
+		@Override
 		public void mouseEntered (MouseEvent e) {
 			JButton source = (JButton) e.getSource();
+
 			star1.setText(GlobalConstants.FILLED_STAR);
 
 			if (star2.equals(source) || star3.equals(source) || star4.equals(source) || star5.equals(source)) {
@@ -117,11 +183,21 @@ public class FilterView extends JPanel implements Observer {
 
 		@Override
 		public void mouseExited (MouseEvent e) {
-			star1.setText(GlobalConstants.STAR);
-			star2.setText(GlobalConstants.STAR);
-			star3.setText(GlobalConstants.STAR);
-			star4.setText(GlobalConstants.STAR);
-			star5.setText(GlobalConstants.STAR);
+			if (model.getFilter() < 1) {
+				star1.setText(GlobalConstants.STAR);
+			}
+			if (model.getFilter() < 2) {
+				star2.setText(GlobalConstants.STAR);
+			}
+			if (model.getFilter() < 3) {
+				star3.setText(GlobalConstants.STAR);
+			}
+			if (model.getFilter() < 4) {
+				star4.setText(GlobalConstants.STAR);
+			}
+			if (model.getFilter() < 5) {
+				star5.setText(GlobalConstants.STAR);
+			}
 		}
 	}
 }

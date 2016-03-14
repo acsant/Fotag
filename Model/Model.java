@@ -25,7 +25,7 @@ public class Model extends Observable {
 	private Dimension currentSize = GlobalConstants.SCREEN_SIZE;
 	private int numImages = 0;
 	private boolean gridView = true;
-
+	private int filtered = 0;
 	public Model() {
 		selectedImages = new HashMap<ImageModel, ImageIcon>();
 	}
@@ -33,8 +33,6 @@ public class Model extends Observable {
 
 
 	public void addFilePaths (ArrayList<String> filePaths) {
-		numImages += filePaths.size();
-		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
 		for (String fp : filePaths) {
 			ImageIcon icon;
 			Path filePath = Paths.get(fp);
@@ -56,6 +54,11 @@ public class Model extends Observable {
 			} catch (IOException ex) {
 				System.err.println("File not found: " + fp);
 			}
+		}
+
+		double numRows = (selectedImages.size() / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
+		if (!isGridView()) {
+			numRows = findNumFiltered();
 		}
 		collectionSize = new Dimension(currentSize.width ,((Double)(numRows * (GlobalConstants.THUMBNAIL_HEIGHT + 100))).intValue());
 		setChanged();
@@ -93,6 +96,9 @@ public class Model extends Observable {
 	public void setCurrentSize(Dimension _currentSize) {
 		this.currentSize = _currentSize;
 		double numRows = (numImages / ((currentSize.width - (GlobalConstants.THUMBNAIL_WIDTH)) / GlobalConstants.THUMBNAIL_WIDTH)) + 1;
+		if (!isGridView()) {
+			numRows = findNumFiltered();
+		}
 		collectionSize = new Dimension(currentSize.width, ((Double)(numRows * (GlobalConstants.THUMBNAIL_HEIGHT + 100))).intValue());
 		setChanged();
 		notifyObservers();
@@ -105,9 +111,39 @@ public class Model extends Observable {
 				imgToRank.rankImage(rank);
 			}
 		}
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setGridView (boolean view) {
 		gridView = view;
+		setCurrentSize(currentSize); // Adjust size and call notify
+	}
+
+	public int getFilter () {
+		return filtered;
+	}
+
+	public void setFilter (int f) {
+		filtered = f;
+		setCurrentSize(collectionSize); // Adjust the size and call notify
+	}
+
+	public boolean isGridView () {
+		return gridView;
+	}
+
+	private int findNumFiltered () {
+		int count = 0;
+		if (filtered > 0) {
+			for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
+				if (entry.getKey().getRank() == filtered) {
+					count++;
+				}
+			}
+		} else {
+			count = selectedImages.size();
+		}
+		return count;
 	}
 }

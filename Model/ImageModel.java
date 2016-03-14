@@ -85,4 +85,8 @@ public class ImageModel {
 	public void rankImage(int rank) {
 		ranking = rank;
 	}
+
+	public int getRank () {
+		return ranking;
+	}
 }

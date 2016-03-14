@@ -18,11 +18,11 @@ public class Fotag {
 
 	public Fotag() {
 		// Set crossplatform look and feel
-		/*try {
+		try {
     		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     	} catch (Exception ex) {
     		System.err.println("Cross platform look an feel not found.");
-    	}*/
+    	}
 
     	// Create the main frame
     	JFrame fotag = new JFrame(GlobalConstants.APPLICATION_NAME);
@@ -71,7 +71,6 @@ public class Fotag {
             @Override
             public void componentResized (ComponentEvent e) {
                 JFrame source = (JFrame) e.getSource();
-                System.out.println(source.getSize());
                 model.setCurrentSize(source.getSize());
                 if (fotag.getSize().getWidth() <= GlobalConstants.MAX_NAME_DISPLAY) {
                     model.setShowName(false);
@@ -88,7 +87,6 @@ public class Fotag {
     	SwingUtilities.invokeLater(new Runnable() {
     		@Override
     		public void run() {
-        		System.out.println("Starting application");
     			Fotag fotag_app = new Fotag();
     		}
     	});

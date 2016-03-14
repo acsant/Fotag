@@ -136,7 +136,7 @@ public class Model extends Observable implements Serializable {
 		int count = 0;
 		if (filtered > 0) {
 			for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
-				if (entry.getKey().getRank() == filtered) {
+				if (entry.getKey().getRank() >= filtered) {
 					count++;
 				}
 			}

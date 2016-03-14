@@ -32,9 +32,8 @@ public class ImageCollectionView extends JPanel implements Observer {
 		HashMap<ImageModel, ImageIcon> selectedImages = model.getSelectedImages();
 		this.removeAll();
 		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
-			System.out.println("Adding image: \n" + entry.getKey().toString() + "\n");
 
-			if (model.getFilter() == 0 || entry.getKey().getRank() == model.getFilter()) {
+			if (model.getFilter() == 0 || entry.getKey().getRank() >= model.getFilter()) {
 				this.add(new ImageView(model, entry.getValue(), entry.getKey().htmlString(),
 						entry.getKey().getImageId(), entry.getKey().getRank()));
 			}

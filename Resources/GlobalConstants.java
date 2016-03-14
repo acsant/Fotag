@@ -9,6 +9,7 @@ public class GlobalConstants {
     public static final String LIST_VIEW_ICON = "listview.png";
     public static final String GRID_VIEW_ICON = "gridview.png";
     public static final String RESOURCES_PATH = "/Resources/";
+    public static final String STATE_FILE_NAME = "Fotag.data";
     public static final Dimension FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Dimension SCREEN_SIZE = new Dimension(800, 600);
     public static final Dimension MINIMUM_SIZE = new Dimension(430, 453);

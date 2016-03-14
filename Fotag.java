@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Fotag {
 
@@ -57,6 +59,14 @@ public class Fotag {
         fotag.setMinimumSize(GlobalConstants.MINIMUM_SIZE);
         fotag.setVisible(true);
         model.setCollectionSize(fotag.getSize());
+        model.loadState();
+        fotag.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                model.saveState();
+            }
+        });
         fotag.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized (ComponentEvent e) {

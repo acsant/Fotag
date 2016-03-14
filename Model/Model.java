@@ -6,8 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.UUID;
 
-public class Model extends Observable {
+public class Model extends Observable implements Serializable {
 	// List of loaded images
 	private HashMap<ImageModel, ImageIcon> selectedImages;
 	private boolean showName = true;
@@ -154,5 +153,41 @@ public class Model extends Observable {
 			}
 		}
 		return null;
+	}
+
+	public void loadState() {
+		String fileName = GlobalConstants.STATE_FILE_NAME;
+		Model readData;
+		FileInputStream fIn;
+		try {
+			fIn = new FileInputStream(fileName);
+			ObjectInputStream objIn = new ObjectInputStream(fIn);
+			try {
+				Object readObject = objIn.readObject();
+				if (readObject instanceof Model) {
+					readData = (Model) readObject;
+					this.selectedImages = readData.selectedImages;
+					this.showName = readData.showName;
+					this.collectionSize = readData.collectionSize;
+					this.currentSize = readData.currentSize;
+				}
+			} catch (ClassNotFoundException ex) {
+				System.err.println("This file type is not supported by the program.");
+			}
+		} catch (IOException ex) {
+
+		}
+	}
+
+	public void saveState() {
+		String fileName = GlobalConstants.STATE_FILE_NAME;
+		try {
+			FileOutputStream fOut = new FileOutputStream(fileName);
+			ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+			objOut.writeObject(this);
+
+		} catch (IOException ex) {
+			System.err.println("Could not save file: " + fileName);
+		}
 	}
 }

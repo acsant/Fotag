@@ -1,13 +1,15 @@
 package Model;
 
 import Resources.*;
+
+import java.io.Serializable;
 import java.nio.file.attribute.*;
 import java.text.*;
 import java.lang.*;
 import java.nio.file.*;
 import java.util.UUID;
 
-public class ImageModel {
+public class ImageModel implements Serializable {
 	// Image attributes including metadata
 	private String imgPath;
 	private String creationDateTime;

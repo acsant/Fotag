@@ -1,7 +1,9 @@
 package Views;
 
+import Model.Model;
 import Resources.GlobalConstants;
-import Model.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +11,7 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.UUID;
 
 public class ImageView extends JPanel {
@@ -63,6 +66,7 @@ public class ImageView extends JPanel {
 			thumbnail.setBorder(borderImage);
 		}
 		metaLabel.setText(meta);
+		thumbnail.addMouseListener(controller);
 		updateRank();
 		super.setLayout(new BorderLayout());
 		super.setBorder(borderView);
@@ -135,64 +139,81 @@ public class ImageView extends JPanel {
 		public void mouseClicked (MouseEvent e) {
 			JLabel source = (JLabel) e.getSource();
 
-			if (star1.equals(source)) {
-				if (star1.getText().equals(GlobalConstants.STAR)) {
-					star1.setText(GlobalConstants.FILLED_STAR);
-				} else {
-					star2.setText(GlobalConstants.STAR);
-					star3.setText(GlobalConstants.STAR);
-					star4.setText(GlobalConstants.STAR);
-					star5.setText(GlobalConstants.STAR);
-				}
-				model.rankImage(imageId, 1);
-			} else if (star2.equals(source)) {
-				if (star2.getText().equals(GlobalConstants.STAR)) {
-					star1.setText(GlobalConstants.FILLED_STAR);
-					star2.setText(GlobalConstants.FILLED_STAR);
-				} else {
-					star3.setText(GlobalConstants.STAR);
-					star4.setText(GlobalConstants.STAR);
-					star5.setText(GlobalConstants.STAR);
-				}
-				model.rankImage(imageId, 2);
-			} else if (star3.equals(source)) {
-				if (star3.getText().equals(GlobalConstants.STAR)) {
-					star1.setText(GlobalConstants.FILLED_STAR);
-					star2.setText(GlobalConstants.FILLED_STAR);
-					star3.setText(GlobalConstants.FILLED_STAR);
-				} else {
-					star4.setText(GlobalConstants.STAR);
-					star5.setText(GlobalConstants.STAR);
-				}
-				model.rankImage(imageId, 3);
-			} else if (star4.equals(source)) {
-				if (star4.getText().equals(GlobalConstants.STAR)) {
-					star1.setText(GlobalConstants.FILLED_STAR);
-					star2.setText(GlobalConstants.FILLED_STAR);
-					star3.setText(GlobalConstants.FILLED_STAR);
-					star4.setText(GlobalConstants.FILLED_STAR);
-				} else {
-					star5.setText(GlobalConstants.STAR);
-				}
-				model.rankImage(imageId, 4);
-			} else if (star5.equals(source)) {
-				if (star5.getText().equals(GlobalConstants.STAR)) {
-					star1.setText(GlobalConstants.FILLED_STAR);
-					star2.setText(GlobalConstants.FILLED_STAR);
-					star3.setText(GlobalConstants.FILLED_STAR);
-					star4.setText(GlobalConstants.FILLED_STAR);
-					star5.setText(GlobalConstants.FILLED_STAR);
+			if (source.equals(thumbnail)) {
+				JDialog imageDialog = new JDialog();
+				String path = model.getImagePathByID(imageId);
+				File imgFile;
+				try {
+					imgFile = new File(path);
+					imageDialog.add(new JLabel(new ImageIcon(ImageIO.read(imgFile).getScaledInstance(800,600,Image.SCALE_SMOOTH))));
 
-					model.rankImage(imageId, 5);
-				} else {
-					star1.setText(GlobalConstants.STAR);
-					star2.setText(GlobalConstants.STAR);
-					star3.setText(GlobalConstants.STAR);
-					star4.setText(GlobalConstants.STAR);
-					star5.setText(GlobalConstants.STAR);
+					imageDialog.setSize(new Dimension(800, 600));
+					imageDialog.setVisible(true);
+
+				} catch (Exception ex) {
+					System.err.println("Image was either deleted or removed.");
+				}
+			} else {
+
+				if (star1.equals(source)) {
+					if (star1.getText().equals(GlobalConstants.STAR)) {
+						star1.setText(GlobalConstants.FILLED_STAR);
+					} else {
+						star2.setText(GlobalConstants.STAR);
+						star3.setText(GlobalConstants.STAR);
+						star4.setText(GlobalConstants.STAR);
+						star5.setText(GlobalConstants.STAR);
+					}
+					model.rankImage(imageId, 1);
+				} else if (star2.equals(source)) {
+					if (star2.getText().equals(GlobalConstants.STAR)) {
+						star1.setText(GlobalConstants.FILLED_STAR);
+						star2.setText(GlobalConstants.FILLED_STAR);
+					} else {
+						star3.setText(GlobalConstants.STAR);
+						star4.setText(GlobalConstants.STAR);
+						star5.setText(GlobalConstants.STAR);
+					}
+					model.rankImage(imageId, 2);
+				} else if (star3.equals(source)) {
+					if (star3.getText().equals(GlobalConstants.STAR)) {
+						star1.setText(GlobalConstants.FILLED_STAR);
+						star2.setText(GlobalConstants.FILLED_STAR);
+						star3.setText(GlobalConstants.FILLED_STAR);
+					} else {
+						star4.setText(GlobalConstants.STAR);
+						star5.setText(GlobalConstants.STAR);
+					}
+					model.rankImage(imageId, 3);
+				} else if (star4.equals(source)) {
+					if (star4.getText().equals(GlobalConstants.STAR)) {
+						star1.setText(GlobalConstants.FILLED_STAR);
+						star2.setText(GlobalConstants.FILLED_STAR);
+						star3.setText(GlobalConstants.FILLED_STAR);
+						star4.setText(GlobalConstants.FILLED_STAR);
+					} else {
+						star5.setText(GlobalConstants.STAR);
+					}
+					model.rankImage(imageId, 4);
+				} else if (star5.equals(source)) {
+					if (star5.getText().equals(GlobalConstants.STAR)) {
+						star1.setText(GlobalConstants.FILLED_STAR);
+						star2.setText(GlobalConstants.FILLED_STAR);
+						star3.setText(GlobalConstants.FILLED_STAR);
+						star4.setText(GlobalConstants.FILLED_STAR);
+						star5.setText(GlobalConstants.FILLED_STAR);
+
+						model.rankImage(imageId, 5);
+					} else {
+						star1.setText(GlobalConstants.STAR);
+						star2.setText(GlobalConstants.STAR);
+						star3.setText(GlobalConstants.STAR);
+						star4.setText(GlobalConstants.STAR);
+						star5.setText(GlobalConstants.STAR);
 
 
-					model.rankImage(imageId, 0);
+						model.rankImage(imageId, 0);
+					}
 				}
 			}
 		}

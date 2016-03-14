@@ -146,4 +146,13 @@ public class Model extends Observable {
 		}
 		return count;
 	}
+
+	public String getImagePathByID (UUID id) {
+		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
+			if (entry.getKey().getImageId().equals(id)) {
+				return entry.getKey().getImagePath();
+			}
+		}
+		return null;
+	}
 }

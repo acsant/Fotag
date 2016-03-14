@@ -15,6 +15,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.UUID;
 
 public class Model extends Observable {
 	// List of loaded images
@@ -23,7 +24,8 @@ public class Model extends Observable {
 	private Dimension collectionSize = GlobalConstants.SCREEN_SIZE;
 	private Dimension currentSize = GlobalConstants.SCREEN_SIZE;
 	private int numImages = 0;
-	
+	private boolean gridView = true;
+
 	public Model() {
 		selectedImages = new HashMap<ImageModel, ImageIcon>();
 	}
@@ -94,5 +96,18 @@ public class Model extends Observable {
 		collectionSize = new Dimension(currentSize.width, ((Double)(numRows * (GlobalConstants.THUMBNAIL_HEIGHT + 100))).intValue());
 		setChanged();
 		notifyObservers();
+	}
+
+	public void rankImage (UUID id, int rank) {
+		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
+			ImageModel imgToRank = entry.getKey();
+			if (imgToRank.getImageId().equals(id)) {
+				imgToRank.rankImage(rank);
+			}
+		}
+	}
+
+	public void setGridView (boolean view) {
+		gridView = view;
 	}
 }

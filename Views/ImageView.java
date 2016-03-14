@@ -1,7 +1,7 @@
 package Views;
 
 import Resources.GlobalConstants;
-
+import Model.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +9,7 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.UUID;
 
 public class ImageView extends JPanel {
 	ImageIcon icon;
@@ -24,11 +25,15 @@ public class ImageView extends JPanel {
 	JLabel star4;
 	JLabel star5;
 	RankController controller;
+	UUID imageId;
+	Model model;
 
-	public ImageView (ImageIcon img, String metaData) {
+	public ImageView (Model _model, ImageIcon img, String metaData, UUID id) {
 		controller = new RankController();
+		model = _model;
 		icon = img;
 		meta = metaData;
+		imageId = id;
 		thumbnail = new JLabel();
 		metaLabel = new JLabel();
 		rankings = new JPanel();
@@ -91,6 +96,7 @@ public class ImageView extends JPanel {
 					star4.setText(GlobalConstants.STAR);
 					star5.setText(GlobalConstants.STAR);
 				}
+				model.rankImage(imageId, 1);
 			} else if (star2.equals(source)) {
 				if (star2.getText().equals(GlobalConstants.STAR)) {
 					star1.setText(GlobalConstants.FILLED_STAR);
@@ -100,6 +106,7 @@ public class ImageView extends JPanel {
 					star4.setText(GlobalConstants.STAR);
 					star5.setText(GlobalConstants.STAR);
 				}
+				model.rankImage(imageId, 2);
 			} else if (star3.equals(source)) {
 				if (star3.getText().equals(GlobalConstants.STAR)) {
 					star1.setText(GlobalConstants.FILLED_STAR);
@@ -109,6 +116,7 @@ public class ImageView extends JPanel {
 					star4.setText(GlobalConstants.STAR);
 					star5.setText(GlobalConstants.STAR);
 				}
+				model.rankImage(imageId, 3);
 			} else if (star4.equals(source)) {
 				if (star4.getText().equals(GlobalConstants.STAR)) {
 					star1.setText(GlobalConstants.FILLED_STAR);
@@ -118,6 +126,7 @@ public class ImageView extends JPanel {
 				} else {
 					star5.setText(GlobalConstants.STAR);
 				}
+				model.rankImage(imageId, 4);
 			} else if (star5.equals(source)) {
 				if (star5.getText().equals(GlobalConstants.STAR)) {
 					star1.setText(GlobalConstants.FILLED_STAR);
@@ -125,12 +134,17 @@ public class ImageView extends JPanel {
 					star3.setText(GlobalConstants.FILLED_STAR);
 					star4.setText(GlobalConstants.FILLED_STAR);
 					star5.setText(GlobalConstants.FILLED_STAR);
+
+					model.rankImage(imageId, 5);
 				} else {
 					star1.setText(GlobalConstants.STAR);
 					star2.setText(GlobalConstants.STAR);
 					star3.setText(GlobalConstants.STAR);
 					star4.setText(GlobalConstants.STAR);
 					star5.setText(GlobalConstants.STAR);
+
+
+					model.rankImage(imageId, 0);
 				}
 			}
 		}

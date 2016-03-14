@@ -5,6 +5,7 @@ import java.nio.file.attribute.*;
 import java.text.*;
 import java.lang.*;
 import java.nio.file.*;
+import java.util.UUID;
 
 public class ImageModel {
 	// Image attributes including metadata
@@ -13,6 +14,8 @@ public class ImageModel {
 	private String lastAccessDateTime;
 	private String imgSize;
 	private String fileName;
+	private int ranking = 0;
+	private UUID imageId;
 	
 	public ImageModel (String filePath, FileTime creationTime, FileTime lastAccess, long size) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(GlobalConstants.DATE_FORMAT);
@@ -22,6 +25,7 @@ public class ImageModel {
 		lastAccessDateTime = dateFormat.format(lastAccess.toMillis());
 		imgSize = formatImageSize(size);
 		fileName = path.getFileName().toString();
+		imageId = UUID.randomUUID();
 	}
 
 	public String getImagePath () {
@@ -72,5 +76,13 @@ public class ImageModel {
 				"<br>" + "Image Size: " + imgSize +
 				"<br>" + "Creation Date: " + creationDateTime + 
 				"<br>" + "Last Accessed: " + lastAccessDateTime + "</html>";
+	}
+
+	public UUID getImageId () {
+		return imageId;
+	}
+
+	public void rankImage(int rank) {
+		ranking = rank;
 	}
 }

@@ -16,7 +16,7 @@ public class ImageCollectionView extends JPanel implements Observer {
 
 	public ImageCollectionView (Model _model) {
 		model = _model;
-
+		super.setBackground(new Color(110, 123, 139));
 		super.setPreferredSize(GlobalConstants.MINIMUM_SIZE);
 		super.setLayout(new FlowLayout());
 	}
@@ -28,7 +28,7 @@ public class ImageCollectionView extends JPanel implements Observer {
 		for (HashMap.Entry<ImageModel, ImageIcon> entry : selectedImages.entrySet()) {
 			System.out.println("Adding image: \n" + entry.getKey().toString() + "\n");
 
-			this.add(new ImageView(entry.getValue(), entry.getKey().htmlString()));
+			this.add(new ImageView(model, entry.getValue(), entry.getKey().htmlString(), entry.getKey().getImageId()));
 		}
 		repaint();
 		Dimension preferredDim = model.getCollectionSize();

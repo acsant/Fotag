@@ -49,7 +49,7 @@ public class Fotag {
         model.addObserver(scrollable);
 
     	// Add subviews to the application window
-        groupPanel.add(filterView, BorderLayout.NORTH);
+        groupPanel.add(filterView, BorderLayout.SOUTH);
         groupPanel.add(scrollable, BorderLayout.CENTER);
     	fotag.add(menu, BorderLayout.NORTH);
         fotag.add(groupPanel, BorderLayout.CENTER);
